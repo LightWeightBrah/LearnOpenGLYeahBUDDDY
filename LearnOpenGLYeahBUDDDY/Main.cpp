@@ -44,6 +44,10 @@ int main()
 
 	glViewport(0, 0, 800, 600);
 
+	int nrAttributes;
+	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+	std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
+
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
@@ -60,18 +64,23 @@ int main()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	const char* vertexShaderSource = "#version 330 core\n"
+	const char* vertexShaderSource = 
+		"#version 330 core\n"
 		"layout (location = 0) in vec3 aPos;\n"
+		"out vec4 vertexColor;\n"//sending vertexColor to frag shader
 		"void main()\n"
 		"{\n"
 		"	gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0f);\n"
+		"	vertexColor = vec4(0.5, 0.0, 0.0, 1.0);\n"
 		"}\0";
 
-	const char* fragmentShaderSource = "#version 330 core\n"
+	const char* fragmentShaderSource = 
+		"#version 330 core\n"
 		"out vec4 FragColor;\n"
+		"in vec4 vertexColor;"//receiving vertexColor input from vertex
 		"void main()\n"
 		"{\n"
-		"	FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+		"	FragColor = vertexColor;\n"
 		"}\0";
 
 	unsigned int vertexShader;
