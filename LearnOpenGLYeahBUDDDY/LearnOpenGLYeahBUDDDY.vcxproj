@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="awesomeface.png" />
+    <Image Include="chad.png" />
     <Image Include="container.jpg" />
     <Image Include="wall.jpg" />
   </ItemGroup>
